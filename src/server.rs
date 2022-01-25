@@ -1,5 +1,5 @@
 use std::net::TcpListener;
-use std::io::{Write, Read};
+use std::io::Read;
 use std::convert::TryFrom;
 
 use crate::http::{Request, Response, StatusCode, ParseError};
@@ -60,6 +60,8 @@ impl Server {
 }
 
 
+
+
 // test from postman:
 // GET 127.0.0.1:8080/search?a=10
 // body json:
@@ -67,8 +69,11 @@ impl Server {
 //     "name":"Ying Lu"
 // }
 
-// Finished dev [unoptimized + debuginfo] target(s) in 0.98s
-// Running `target\debug\http-server.exe`
+// $ cargo run
+// or
+// $ PUBLIC_PATH=$(pwd)/public cargo run
+//     Finished dev [unoptimized + debuginfo] target(s) in 0.01s
+//      Running `target\debug\http-server.exe`
 // listening on 127.0.0.1:8080
 // Received a request: GET /search?a=10 HTTP/1.1
 // Content-Type: application/json
