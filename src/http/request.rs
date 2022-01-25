@@ -4,11 +4,12 @@ use std::error::Error;
 use std::fmt::{Result as FmtResult, Display, Debug, Formatter};
 use std::str;
 use std::str::Utf8Error;
+use super::QueryString;
 
 #[derive(Debug)]
 pub struct Request<'buf> {
     path: &'buf str, // /search
-    query_string: Option<&'buf str>, // name=abc&sort=1 or None
+    query_string: Option<QueryString<'buf>>, // name=abc&sort=1 or None
     method: Method, // GET 
 }
 
@@ -46,8 +47,10 @@ impl<'buf> TryFrom<&'buf [u8]> for Request<'buf> {
 
         let mut query_string = None;
         if let Some(i) = path.find('?') {
-            query_string = Some(&path[i + 1..]);
-            path = &path[..i];
+            let q = QueryString::from(&path[i + 1..]);
+            query_string = Some(q);   
+
+            path = &path[..i]; // this statement needs to be last!!!
         }
 
         Ok(Self {
@@ -113,8 +116,4 @@ impl Debug for ParseError {
 }
 
 impl Error for ParseError {}
-
-
-
-
 
