@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-
 #[derive(Debug)]
 pub struct QueryString<'buf> {
     data: HashMap<&'buf str, Value<'buf>>,
